@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void CreateNewList (View view)
     {
-        Intent CNL = new Intent(MainActivity.this, CreateNewToDoList.class);
-        startActivity(CNL);
+        Intent CreateNewList = new Intent(MainActivity.this, CreateNewToDoList.class);
+        startActivity(CreateNewList);
     }
 }

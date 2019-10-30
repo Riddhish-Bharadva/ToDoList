@@ -13,12 +13,12 @@ class CreateDBT extends SQLiteOpenHelper
     }
     public void onCreate(SQLiteDatabase DB)
     {
-        DB.execSQL("CREATE Table IF NOT EXISTS List (Details VARCHAR, Completed Boolean)");
+        DB.execSQL("CREATE Table IF NOT EXISTS List (Details VARCHAR, CreationDate Date, Completed Boolean)");
         Log.i("Table:", "Table Created.");
     }
     public void onUpgrade(SQLiteDatabase DB, int i, int j)
     {
         DB.execSQL("DROP Table List");
-        DB.execSQL("CREATE Table IF NOT EXISTS List (Details VARCHAR, Completed Boolean)");
+        DB.execSQL("CREATE Table IF NOT EXISTS List (Details VARCHAR, CreationDate Date, Completed Boolean)");
     }
 }
