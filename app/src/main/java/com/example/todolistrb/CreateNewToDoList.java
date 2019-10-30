@@ -1,15 +1,15 @@
 package com.example.todolistrb;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 public class CreateNewToDoList extends AppCompatActivity {
 
@@ -19,32 +19,56 @@ public class CreateNewToDoList extends AppCompatActivity {
         setContentView(R.layout.activity_create_new_to_do_list);
     }
 
-    public void CreateListFunction()
+    public void CreateListFunction(View view)
     {
-        EditText NewListValue = findViewById(R.id.ListTitle);
-        if(NewListValue.length() != 0)
+        EditText ListTitle = findViewById(R.id.ListTitle);
+        if(ListTitle.length() != 0)
         {
-            String CurrentDate = new SimpleDateFormat("DD-MM-YYYY", Locale.getDefault()).format(new Date());
-            String CurrentTime = new SimpleDateFormat("HH:MM:SS", Locale.getDefault()).format(new Date());
-            Toast.makeText(CreateNewToDoList.this, "List name is: " + NewListValue + " Date is: " + CurrentDate + " Time is: " + CurrentTime, Toast.LENGTH_SHORT).show();
+            String ListValue;
+            int CompletedValue = 0;
+            long Status;
+
+            ListValue = ListTitle.getText().toString();
+            SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
+            String UniqueId = new SimpleDateFormat("DDMMYYYYHHMMSS", Locale.getDefault()).format(new Date());
+            String CurrentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            String CurrentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+            ContentValues cValues = new ContentValues();
+            cValues.put("UniqueId", UniqueId);
+            cValues.put("ListName", ListValue);
+            cValues.put("CreationDate", CurrentDate);
+            cValues.put("CreationTime", CurrentTime);
+            cValues.put("Completed", CompletedValue);
+            Status = DB.insert("ToDoListTable", null, cValues);
+
+            if(Status != -1)
+            {
+                Toast.makeText(CreateNewToDoList.this, "New list created successfully.",Toast.LENGTH_SHORT).show();
+                ListTitle.setText(null);
+            }
+            else
+            {
+                Toast.makeText(CreateNewToDoList.this, "Error occurred while creating new List. Please try again.", Toast.LENGTH_SHORT).show();
+            }
         }
         else
         {
-            Toast.makeText(CreateNewToDoList.this, "List name cannot be blank.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateNewToDoList.this, "List Title cannot be blank.", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void ResetFunction(View view)
     {
         EditText listTitle = findViewById(R.id.ListTitle);
-        listTitle.setText(null);
-        if(listTitle.length() == 0)
+        if(listTitle.length() != 0)
         {
+            listTitle.setText(null);
             Toast.makeText(CreateNewToDoList.this, "Reset successful.", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            Toast.makeText(CreateNewToDoList.this, "Error occurred while resetting values. Please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateNewToDoList.this, "List title is already blank.", Toast.LENGTH_SHORT).show();
         }
     }
 

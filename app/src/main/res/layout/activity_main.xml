@@ -7,6 +7,18 @@
     android:background="@android:color/background_light"
     tools:context=".MainActivity">
 
+    <view
+        android:id="@+id/MainPageListView"
+        class="androidx.appcompat.app.AlertController$RecycleListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:clickable="true"
+        android:onClick="OpenExistingList"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="15dp">
+
+    </view>
     <Button
         android:id="@+id/CreateNewListHomePageButton"
         android:layout_width="wrap_content"
@@ -20,4 +32,5 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

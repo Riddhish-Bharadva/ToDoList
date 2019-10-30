@@ -16,11 +16,15 @@ public class MainActivity extends AppCompatActivity
 
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
         CreateDBT CDBT = new CreateDBT(getApplicationContext());
-        CDBT.onCreate(DB);
+        CDBT.getWritableDatabase();
     }
     public void CreateNewList (View view)
     {
         Intent CreateNewList = new Intent(MainActivity.this, CreateNewToDoList.class);
         startActivity(CreateNewList);
+    }
+    public void OpenExistingList(View view)
+    {
+
     }
 }
