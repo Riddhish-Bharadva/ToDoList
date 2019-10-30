@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
-        CreateDBT CDBT;
+        CreateDBT CDBT = new CreateDBT(getApplicationContext());
         CDBT.onCreate(DB);
     }
     public void CreateNewList (View view)
