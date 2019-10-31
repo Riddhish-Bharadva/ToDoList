@@ -36,8 +36,8 @@ public class CreateNewToDoList extends AppCompatActivity {
             if(db_cursor.getCount() == 0)
             {
                 String UniqueId = new SimpleDateFormat("DDMMYYYYHHMMSS", Locale.getDefault()).format(new Date());
-                String CurrentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                String CurrentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                String CurrentDate = new SimpleDateFormat("DD-MM-YYYY", Locale.getDefault()).format(new Date());
+                String CurrentTime = new SimpleDateFormat("HH:MM:SS", Locale.getDefault()).format(new Date());
 
                 ContentValues cValues = new ContentValues();
                 cValues.put("UniqueId", UniqueId);
@@ -62,6 +62,7 @@ public class CreateNewToDoList extends AppCompatActivity {
                 ListTitle.setText(null);
                 Toast.makeText(CreateNewToDoList.this, "List Title already exist. Please try again with a different List Title.", Toast.LENGTH_LONG).show();
             }
+            DB.close();
         }
         else
         {
@@ -87,5 +88,21 @@ public class CreateNewToDoList extends AppCompatActivity {
     {
         Intent GoBack = new Intent(CreateNewToDoList.this, MainActivity.class);
         startActivity(GoBack);
+    }
+
+    public void DeleteAllListsFromDB(View view)
+    {
+        SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
+        DB.execSQL("DELETE from ToDoListTable");
+        Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable", null);
+        if (db_cursor.getCount() == 0)
+        {
+            Toast.makeText(CreateNewToDoList.this, "All lists are deleted successfully.", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(CreateNewToDoList.this, "Failed to delete all Lists. Please try again.", Toast.LENGTH_SHORT).show();
+        }
+        DB.close();
     }
 }

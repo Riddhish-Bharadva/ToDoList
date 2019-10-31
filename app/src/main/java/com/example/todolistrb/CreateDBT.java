@@ -3,7 +3,6 @@ package com.example.todolistrb;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 class CreateDBT extends SQLiteOpenHelper
 {
@@ -14,7 +13,6 @@ class CreateDBT extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase DB)
     {
         DB.execSQL("CREATE Table IF NOT EXISTS ToDoListTable (UniqueId VARCHAR, ListName VARCHAR, CreationDate Date, CreationTime Time, Completed int)");
-        Log.i("DB_List_Table:", "Table Created.");
     }
     public void onUpgrade(SQLiteDatabase DB, int i, int j)
     {

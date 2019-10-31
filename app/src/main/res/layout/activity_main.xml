@@ -21,4 +21,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:id="@+id/ListTitleView"
+        android:text="No List created yet to Display.">
+
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>

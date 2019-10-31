@@ -62,4 +62,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/ListTitle"
         app:layout_constraintVertical_bias="0.15" />
+
+    <Button
+        android:id="@+id/DeleteAllLists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="DeleteAllListsFromDB"
+        android:text="Delete Existing Lists"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ListTitle"
+        app:layout_constraintVertical_bias="0.30" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
