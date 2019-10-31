@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
         CreateDBT CDBT = new CreateDBT(getApplicationContext());
         CDBT.getWritableDatabase();
+
     }
     public void CreateNewList (View view)
     {
