@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -26,10 +24,11 @@ public class MainActivity extends AppCompatActivity
 
 // Displaying data from database to my ListTitleView on Home Page.
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
-        ListView ListTitleView = (ListView) findViewById(R.id.ListTitleView);
+        ListView ListTitleView = findViewById(R.id.ListTitleView);
         ArrayList<String> ArrayListTitle = new ArrayList<String>();
         ArrayAdapter<String> ArrayListTitleAdapter;
-        Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable order by ListName ASC", null);
+// In below select statement, COLLATE NOCASE is key word to ignore case of data and sort them in ascending / descending order.
+        Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable order by ListName COLLATE NOCASE ASC", null);
         if(db_cursor.getCount() != 0)
         {
             if(db_cursor.moveToFirst())
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity
             }
             db_cursor.close();
         }
+// If there are no entries in DB, it will display below message to user.
         else
         {
             ArrayListTitle.add("No list created yet to display here.");
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         }
         DB.close();
     }
+// Below is code for button on clicking on home to navigate to new list creation page.
     public void CreateNewList (View view)
     {
         Intent CreateNewList = new Intent(MainActivity.this, CreateNewToDoList.class);

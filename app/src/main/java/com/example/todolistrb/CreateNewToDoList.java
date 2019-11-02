@@ -23,6 +23,7 @@ public class CreateNewToDoList extends AppCompatActivity {
     public void CreateListFunction(View view)
     {
         EditText ListTitle = findViewById(R.id.ListTitle);
+// In below if condition, we are checking List name field should not be blank.
         if(ListTitle.length() != 0)
         {
             String ListValue;
@@ -33,12 +34,14 @@ public class CreateNewToDoList extends AppCompatActivity {
             SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
             Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable where ListName = '" + ListValue + "' order by ListName ASC", null);
             db_cursor.moveToFirst();
+// Using below if condition, we are checking if entered list name already exist in our database or not. If it doesn't exist, it will proceed to create new list.
             if(db_cursor.getCount() == 0)
             {
-                String UniqueId = new SimpleDateFormat("DDMMYYYYHHMMSS", Locale.getDefault()).format(new Date());
-                String CurrentDate = new SimpleDateFormat("DD-MM-YYYY", Locale.getDefault()).format(new Date());
-                String CurrentTime = new SimpleDateFormat("HH:MM:SS", Locale.getDefault()).format(new Date());
-
+// UniqueId, CreationDate & CreationTime is calculated in below code using timestamp.
+                String UniqueId = new SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault()).format(new Date());
+                String CurrentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                String CurrentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+// We are putting values column by column in DB using below code.
                 ContentValues cValues = new ContentValues();
                 cValues.put("UniqueId", UniqueId);
                 cValues.put("ListName", ListValue);
@@ -46,7 +49,7 @@ public class CreateNewToDoList extends AppCompatActivity {
                 cValues.put("CreationTime", CurrentTime);
                 cValues.put("Completed", CompletedValue);
                 Status = DB.insert("ToDoListTable", null, cValues);
-
+// We are checking if insertion is successful or not.
                 if(Status != -1)
                 {
                     ListTitle.setText(null);
@@ -57,6 +60,7 @@ public class CreateNewToDoList extends AppCompatActivity {
                     Toast.makeText(CreateNewToDoList.this, "Error occurred while creating new List. Please try again.", Toast.LENGTH_SHORT).show();
                 }
             }
+// If list title already exist in DB, it will jump here.
             else
             {
                 ListTitle.setText(null);
@@ -64,12 +68,14 @@ public class CreateNewToDoList extends AppCompatActivity {
             }
             DB.close();
         }
+// If there is no value entered by user, below message will be displayed to user.
         else
         {
             Toast.makeText(CreateNewToDoList.this, "List Title cannot be blank.", Toast.LENGTH_SHORT).show();
         }
     }
 
+// Below is code to reset field values.
     public void ResetFunction(View view)
     {
         EditText listTitle = findViewById(R.id.ListTitle);
@@ -84,12 +90,14 @@ public class CreateNewToDoList extends AppCompatActivity {
         }
     }
 
+// Below is code to navigate to home page.
     public void GoBackFunction(View view)
     {
         Intent GoBack = new Intent(CreateNewToDoList.this, MainActivity.class);
         startActivity(GoBack);
     }
 
+// Below is code to delete all lists from DB.
     public void DeleteAllListsFromDB(View view)
     {
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
