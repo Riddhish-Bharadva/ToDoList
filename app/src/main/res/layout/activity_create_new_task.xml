@@ -4,48 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskHomePage">
+    tools:context=".CreateNewTask">
 
     <TextView
-        android:id="@+id/ListTitleHeading"
+        android:id="@+id/ListTitleTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:hint="List Name"
         android:padding="10dp"
-        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.1" />
 
-    <Button
-        android:id="@+id/AddTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:onClick="AddNewTask"
-        android:padding="10dp"
-        android:text="Add New Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintLeft_toLeftOf="@id/ListTitleHeading"
-        app:layout_constraintRight_toRightOf="@id/ListTitleHeading"
-        app:layout_constraintTop_toBottomOf="@id/ListTitleHeading"
-        app:layout_constraintVertical_bias="0" />
-
-    <ListView
-        android:id="@+id/TaskView"
+    <TextView
+        android:id="@+id/NewTaskTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:hint="Enter New Task"
         android:padding="10dp"
-        android:text="No Task created yet to Display."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/AddTaskButton"
-        app:layout_constraintVertical_bias="0">
+        app:layout_constraintTop_toBottomOf="@id/ListTitleTextBox"
+        app:layout_constraintVertical_bias="0.01" />
 
-    </ListView>
+    <Button
+        android:id="@+id/ResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="OnClickResetButton"
+        android:padding="10dp"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/NewTaskTextBox"
+        app:layout_constraintVertical_bias="0.01" />
 </androidx.constraintlayout.widget.ConstraintLayout>
