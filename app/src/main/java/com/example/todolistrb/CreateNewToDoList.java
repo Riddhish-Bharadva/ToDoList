@@ -38,12 +38,10 @@ public class CreateNewToDoList extends AppCompatActivity {
             if(db_cursor.getCount() == 0)
             {
 // UniqueId, CreationDate & CreationTime is calculated in below code using timestamp.
-                String UniqueId = new SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault()).format(new Date());
                 String CurrentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 String CurrentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 // We are putting values column by column in DB using below code.
                 ContentValues cValues = new ContentValues();
-                cValues.put("UniqueId", UniqueId);
                 cValues.put("ListName", ListValue);
                 cValues.put("CreationDate", CurrentDate);
                 cValues.put("CreationTime", CurrentTime);
@@ -86,7 +84,7 @@ public class CreateNewToDoList extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(CreateNewToDoList.this, "List title is already blank.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateNewToDoList.this, "List title text box is already blank.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -101,15 +99,19 @@ public class CreateNewToDoList extends AppCompatActivity {
     public void DeleteAllListsFromDB(View view)
     {
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
-        DB.execSQL("DELETE from ToDoListTable");
         Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable", null);
-        if (db_cursor.getCount() == 0)
+        if(db_cursor.getCount() == 0)
         {
-            Toast.makeText(CreateNewToDoList.this, "All lists are deleted successfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateNewToDoList.this, "There are no lists to delete.", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            Toast.makeText(CreateNewToDoList.this, "Failed to delete all Lists. Please try again.", Toast.LENGTH_SHORT).show();
+        else{
+            DB.execSQL("DELETE from ToDoListTable");
+            Cursor db_cursor1 = DB.rawQuery("Select * From ToDoListTable", null);
+            if (db_cursor1.getCount() == 0) {
+                Toast.makeText(CreateNewToDoList.this, "All lists are deleted successfully.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(CreateNewToDoList.this, "Failed to delete all Lists. Please try again.", Toast.LENGTH_SHORT).show();
+            }
         }
         DB.close();
     }

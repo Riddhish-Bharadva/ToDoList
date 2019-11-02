@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 // Displaying data from database to my ListTitleView on Home Page.
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
         final ListView ListTitleView = findViewById(R.id.ListTitleView);
-        ArrayList<String> ArrayListTitle = new ArrayList<String>();
+        final ArrayList<String> ArrayListTitle = new ArrayList<String>();
         ArrayAdapter<String> ArrayListTitleAdapter;
 // In below select statement, COLLATE NOCASE is key word to ignore case of data and sort them in ascending / descending order.
         final Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable order by ListName COLLATE NOCASE ASC", null);
@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity
                     ListTitleView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String pos = ArrayListTitle.get(position).toString();
                             Intent intent = new Intent(MainActivity.this, TaskHomePage.class);
-                            intent.putExtra("ListName", ListName);
+                            intent.putExtra("Pos", pos);
                             startActivity(intent);
                         }
                     });

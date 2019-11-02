@@ -12,7 +12,7 @@ public class TaskHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_task_home_page);
 
         Bundle bundle = getIntent().getExtras();
-        String ListName = bundle.getString("ListName");
+        String ListName = bundle.getString("Pos");
         TextView ListTitleHeading = findViewById(R.id.ListTitleHeading);
         ListTitleHeading.setText(ListName);
     }
