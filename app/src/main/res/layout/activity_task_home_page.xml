@@ -6,4 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".TaskHomePage">
 
+    <TextView
+        android:id="@+id/ListTitleHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="List Title"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <Button
+        android:id="@+id/AddTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:text="Add New Task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toLeftOf="@id/ListTitleHeading"
+        app:layout_constraintRight_toRightOf="@id/ListTitleHeading"
+        app:layout_constraintTop_toTopOf="@id/ListTitleHeading"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <ListView
+        android:id="@+id/TaskView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No Task created yet to Display."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7">
+
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>

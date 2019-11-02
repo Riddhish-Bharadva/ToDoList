@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
 
 // Displaying data from database to my ListTitleView on Home Page.
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
-        ListView ListTitleView = findViewById(R.id.ListTitleView);
+        final ListView ListTitleView = findViewById(R.id.ListTitleView);
         ArrayList<String> ArrayListTitle = new ArrayList<String>();
         ArrayAdapter<String> ArrayListTitleAdapter;
 // In below select statement, COLLATE NOCASE is key word to ignore case of data and sort them in ascending / descending order.
@@ -35,15 +35,17 @@ public class MainActivity extends AppCompatActivity
             if(db_cursor.moveToFirst())
             {
                 do{
-                    ArrayListTitle.add(db_cursor.getString(db_cursor.getColumnIndex("ListName")));
+                    final String ListName = db_cursor.getString(db_cursor.getColumnIndex("ListName"));
+                    ArrayListTitle.add(ListName);
                     ArrayListTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ArrayListTitle);
                     ListTitleView.setAdapter(ArrayListTitleAdapter);
+// We are sending ListName to TaskHomePage using below code.
                     ListTitleView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent i = new Intent(MainActivity.this, TaskHomePage.class);
-                            i.putExtra("ListName",db_cursor.getColumnIndex("ListName"));
-                            startActivity(i);
+                            Intent intent = new Intent(MainActivity.this, TaskHomePage.class);
+                            intent.putExtra("ListName", ListName);
+                            startActivity(intent);
                         }
                     });
                 }while (db_cursor.moveToNext());
