@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         ArrayList<String> ArrayListTitle = new ArrayList<String>();
         ArrayAdapter<String> ArrayListTitleAdapter;
 // In below select statement, COLLATE NOCASE is key word to ignore case of data and sort them in ascending / descending order.
-        Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable order by ListName COLLATE NOCASE ASC", null);
+        final Cursor db_cursor = DB.rawQuery("Select * From ToDoListTable order by ListName COLLATE NOCASE ASC", null);
         if(db_cursor.getCount() != 0)
         {
             if(db_cursor.moveToFirst())
@@ -37,6 +38,14 @@ public class MainActivity extends AppCompatActivity
                     ArrayListTitle.add(db_cursor.getString(db_cursor.getColumnIndex("ListName")));
                     ArrayListTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ArrayListTitle);
                     ListTitleView.setAdapter(ArrayListTitleAdapter);
+                    ListTitleView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent i = new Intent(MainActivity.this, TaskHomePage.class);
+                            i.putExtra("ListName",db_cursor.getColumnIndex("ListName"));
+                            startActivity(i);
+                        }
+                    });
                 }while (db_cursor.moveToNext());
             }
             db_cursor.close();
