@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".TaskHomePage">
 
+    <Button
+        android:id="@+id/GoBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="GoBackFunction"
+        android:padding="10dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.80"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ListTitleHeading"
+        app:layout_constraintVertical_bias="0.01" />
+
     <TextView
         android:id="@+id/ListTitleHeading"
         android:layout_width="match_parent"
@@ -28,11 +43,11 @@
         android:padding="10dp"
         android:text="Add New Task"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintLeft_toLeftOf="@id/ListTitleHeading"
         app:layout_constraintRight_toRightOf="@id/ListTitleHeading"
         app:layout_constraintTop_toBottomOf="@id/ListTitleHeading"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0.01" />
 
     <ListView
         android:id="@+id/TaskView"

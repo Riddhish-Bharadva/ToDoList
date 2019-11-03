@@ -106,8 +106,10 @@ public class CreateNewToDoList extends AppCompatActivity {
         }
         else{
             DB.execSQL("DELETE from ToDoListTable");
+            DB.execSQL("DELETE from TaskTable");
             Cursor db_cursor1 = DB.rawQuery("Select * From ToDoListTable", null);
-            if (db_cursor1.getCount() == 0) {
+            Cursor db_cursor2 = DB.rawQuery("Select * From TaskTable", null);
+            if (db_cursor1.getCount() == 0 && db_cursor2.getCount() == 0) {
                 Toast.makeText(CreateNewToDoList.this, "All lists are deleted successfully.", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(CreateNewToDoList.this, "Failed to delete all Lists. Please try again.", Toast.LENGTH_SHORT).show();

@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             String pos = ArrayListTitle.get(position).toString();
                             Intent intent = new Intent(MainActivity.this, TaskHomePage.class);
-                            intent.putExtra("Pos", pos);
+                            intent.putExtra("ListName", pos);
                             startActivity(intent);
                         }
                     });

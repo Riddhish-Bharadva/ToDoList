@@ -19,26 +19,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.10" />
 
     <Button
         android:id="@+id/CreateListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="CreateListFunction"
         android:padding="10dp"
         android:text="Create"
-        android:onClick="CreateListFunction"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ListTitle"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toBottomOf="@id/ListTitle"
+        app:layout_constraintVertical_bias="0.01" />
 
     <Button
         android:id="@+id/ResetAllButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:onClick="ResetFunction"
         android:padding="10dp"
         android:text="Reset"
@@ -46,22 +48,23 @@
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ListTitle"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toBottomOf="@id/ListTitle"
+        app:layout_constraintVertical_bias="0.01" />
 
     <Button
         android:id="@+id/GoBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:onClick="GoBackFunction"
         android:padding="10dp"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.90"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ListTitle"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintTop_toBottomOf="@id/ListTitle"
+        app:layout_constraintVertical_bias="0.01" />
 
     <Button
         android:id="@+id/DeleteAllLists"
@@ -69,11 +72,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:onClick="DeleteAllListsFromDB"
+        android:padding="10dp"
         android:text="Delete Existing Lists"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ListTitle"
-        app:layout_constraintVertical_bias="0.30" />
+        app:layout_constraintTop_toBottomOf="@id/ListTitle"
+        app:layout_constraintVertical_bias="0.16" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

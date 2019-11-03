@@ -1,7 +1,6 @@
 package com.example.todolistrb;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,9 +19,9 @@ public class TaskHomePage extends AppCompatActivity {
         setContentView(R.layout.activity_task_home_page);
 
         Bundle bundle = getIntent().getExtras();
-        String ListName = bundle.getString("Pos");
+        String ListName = bundle.getString("ListName");
         TextView ListTitleHeading = findViewById(R.id.ListTitleHeading);
-        ListTitleHeading.setText("To do list Name : " + ListName);
+        ListTitleHeading.setText("Todo list Name : " + ListName);
 
 // Displaying data from database to my ListTitleView on Home Page.
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
@@ -30,7 +29,7 @@ public class TaskHomePage extends AppCompatActivity {
         final ArrayList<String> ArrayTaskTitle = new ArrayList<String>();
         ArrayAdapter<String> ArrayTaskTitleAdapter;
 // In below select statement, COLLATE NOCASE is key word to ignore case of data and sort them in ascending / descending order.
-        Cursor db_cursor = DB.rawQuery("Select * From TaskTable order by TaskName COLLATE NOCASE ASC", null);
+        Cursor db_cursor = DB.rawQuery("Select * From TaskTable where ListName = '" + ListName + "' order by TaskName COLLATE NOCASE ASC", null);
         if(db_cursor.getCount() != 0)
         {
             if(db_cursor.moveToFirst())
@@ -57,9 +56,16 @@ public class TaskHomePage extends AppCompatActivity {
     public void AddNewTask(View view)
     {
         Bundle bundle = getIntent().getExtras();
-        String ListName = bundle.getString("Pos");
+        String ListName = bundle.getString("ListName");
         Intent CreateNewTask = new Intent(TaskHomePage.this, CreateNewTask.class);
         CreateNewTask.putExtra("ListName", ListName);
         startActivity(CreateNewTask);
+    }
+
+// Below is code to navigate to Task home page.
+    public void GoBackFunction(View view)
+    {
+        Intent GoBack = new Intent(TaskHomePage.this, MainActivity.class);
+        startActivity(GoBack);
     }
 }
