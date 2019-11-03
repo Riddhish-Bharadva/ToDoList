@@ -1,12 +1,15 @@
 package com.example.todolistrb;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,33 @@ public class CreateNewTask extends AppCompatActivity {
 // Below code is setting List Name in it's Text Box.
         TextView ListTitleTextBox = findViewById(R.id.ListTitleTextBox);
         ListTitleTextBox.setText("You are going to add a Task in " + ListName);
+// Below code is used to select date on create new task page.
+        final Calendar myCalendar = Calendar.getInstance();
+        final EditText TaskDate = findViewById(R.id.TaskDateTextBox);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+            {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                TaskDate.setText(sdf.format(myCalendar.getTime()));
+            }
+        };
+        TaskDate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(CreateNewTask.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+// Calendar code ends.
     }
 
     public void CreateTaskButton(View view)
@@ -35,6 +65,7 @@ public class CreateNewTask extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
         EditText NewTask = findViewById(R.id.NewTaskTextBox);
+
 // In below if condition, we are checking List name field should not be blank.
         if(NewTask.length() != 0)
         {
@@ -48,8 +79,16 @@ public class CreateNewTask extends AppCompatActivity {
             db_cursor.moveToFirst();
 // Using below if condition, we are checking if entered list name already exist in our database or not. If it doesn't exist, it will proceed to create new list.
             if (db_cursor.getCount() == 0) {
-// UniqueId, CreationDate & CreationTime is calculated in below code using timestamp.
-                String DueDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                EditText TaskDate = findViewById(R.id.TaskDateTextBox);
+                String DueDate;
+                if(TaskDate.getText().toString().length() != 0)
+                {
+                    DueDate = TaskDate.getText().toString();
+                }
+                else
+                {
+                    DueDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                }
 // We are putting values column by column in DB using below code.
                 ContentValues cValues = new ContentValues();
                 cValues.put("ListName", ListName);
@@ -61,6 +100,7 @@ public class CreateNewTask extends AppCompatActivity {
                 if (Status != -1)
                 {
                     NewTask.setText(null);
+                    TaskDate.setText(null);
                     Toast.makeText(CreateNewTask.this, "New task created successfully.", Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -87,9 +127,11 @@ public class CreateNewTask extends AppCompatActivity {
     public void OnClickResetButton(View view)
     {
         EditText NewTaskTextBox = findViewById(R.id.NewTaskTextBox);
-        if(NewTaskTextBox.length() != 0)
+        EditText TaskDate = findViewById(R.id.TaskDateTextBox);
+        if(NewTaskTextBox.length() != 0 || TaskDate.getText().toString().length() != 0)
         {
             NewTaskTextBox.setText(null);
+            TaskDate.setText(null);
             Toast.makeText(CreateNewTask.this, "Reset successful.", Toast.LENGTH_SHORT).show();
         }
         else
