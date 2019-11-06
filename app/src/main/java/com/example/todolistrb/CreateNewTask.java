@@ -136,7 +136,7 @@ public class CreateNewTask extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(CreateNewTask.this, "Task title is already blank.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateNewTask.this, "All fields are already blank.", Toast.LENGTH_SHORT).show();
         }
     }
 
