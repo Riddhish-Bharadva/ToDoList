@@ -84,7 +84,7 @@ public class CreateNewToDoList extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(CreateNewToDoList.this, "List title text box is already blank.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CreateNewToDoList.this, "List title is already blank.", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateNewTask">
+    tools:context=".TaskEditPage">
 
     <Button
         android:id="@+id/GoBackButton"
@@ -18,11 +18,11 @@
         app:layout_constraintHorizontal_bias="0.90"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TaskDateTextBox"
+        app:layout_constraintTop_toBottomOf="@id/ETaskDateTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
     <TextView
-        android:id="@+id/ListTitleTextBox"
+        android:id="@+id/EListTitleTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -36,34 +36,34 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <EditText
-        android:id="@+id/NewTaskTextBox"
+        android:id="@+id/EditTaskTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="Enter New Task"
+        android:hint="Enter new name for this task."
         android:padding="10dp"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ListTitleTextBox"
+        app:layout_constraintTop_toBottomOf="@id/EListTitleTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
     <EditText
-        android:id="@+id/TaskDateTextBox"
+        android:id="@+id/ETaskDateTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="Select Date"
-        android:padding="10dp"
-        android:textSize="15sp"
         android:clickable="true"
         android:editable="false"
         android:focusable="false"
+        android:hint="Select Date"
+        android:padding="10dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/NewTaskTextBox"
+        app:layout_constraintTop_toBottomOf="@id/EditTaskTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
     <Button
@@ -71,14 +71,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:onClick="OnClickResetButton"
         android:padding="10dp"
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TaskDateTextBox"
+        app:layout_constraintTop_toBottomOf="@id/ETaskDateTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
     <Button
@@ -86,14 +85,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:onClick="CreateTaskButton"
         android:padding="10dp"
         android:text="Create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TaskDateTextBox"
+        app:layout_constraintTop_toBottomOf="@id/ETaskDateTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

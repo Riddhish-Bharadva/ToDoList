@@ -30,9 +30,7 @@ public class MainActivity extends AppCompatActivity
 
 // Displaying data from database to my ListTitleView on Home Page.
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
-        final ListView ListTitleView = findViewById(R.id.ListTitleView);
-        final TextView TotalTaskTextBox = findViewById(R.id.TotalTaskTextBox);
-        final TextView CompletedTaskTextBox = findViewById(R.id.CompletedTaskTextBox);
+        ListView ListTitleView = findViewById(R.id.TaskListView);
         final ArrayList<String> ArrayListTitle = new ArrayList<String>();
         ArrayList<String> CT = new ArrayList<String>();
         ArrayList<String> TT = new ArrayList<String>();
@@ -75,6 +73,16 @@ public class MainActivity extends AppCompatActivity
                         String tt1 = "0";
                         TT.add(tt1);
                     }
+                    if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
+                    {
+                        String UR = "Update ToDoListTable set Completed = 1 where ListName = '" + ListName + "'";
+                        DB.execSQL(UR);
+                    }
+                    else
+                    {
+                        String UR = "Update ToDoListTable set Completed = 0 where ListName = '" + ListName + "'";
+                        DB.execSQL(UR);
+                    }
                 }while (db_cursor.moveToNext());
             }
             db_cursor.close();
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity
             ListTitleView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String pos = ArrayListTitle.get(position).toString();
+                    String pos = ArrayListTitle.get(position);
                     Intent intent = new Intent(MainActivity.this, TaskHomePage.class);
                     intent.putExtra("ListName", pos);
                     startActivity(intent);
