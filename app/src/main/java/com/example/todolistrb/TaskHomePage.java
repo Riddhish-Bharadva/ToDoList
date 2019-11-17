@@ -210,7 +210,7 @@ public class TaskHomePage extends AppCompatActivity {
                         Toast.makeText(TaskHomePage.this, "Task is successfully deleted.",Toast.LENGTH_SHORT).show();
 // Below code will change status of list in main page.
                         Cursor db_ct = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskCompleted = '1'", null);
-                        Cursor db_tt = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "'", null);
+                        Cursor db_tt = myDB.rawQuery("Select * from Tasktable where ListName = '" + GV_ListName + "'", null);
                         if(db_tt.getCount() == db_ct.getCount() && db_tt.getCount() != 0)
                         {
                             String UpdateRecord = "Update ToDoListTable set Completed = 1 where ListName = '" + GV_ListName + "'";
