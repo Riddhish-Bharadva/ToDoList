@@ -52,8 +52,8 @@ public class TaskHomePage extends AppCompatActivity {
         int TaskCompleted;
         if(db_cursor_all_task.getCount() != 0)
         {
-            Cursor db_cursor = DB.rawQuery("Select * From TaskTable where TaskCompleted = '0' order by TaskName COLLATE NOCASE ASC", null);
-            Cursor db_cursor_completed = DB.rawQuery("Select * From TaskTable where TaskCompleted = '1' order by TaskName COLLATE NOCASE ASC", null);
+            Cursor db_cursor = DB.rawQuery("Select * From TaskTable where ListName = '" + ListName + "' and TaskCompleted = '0' order by TaskName COLLATE NOCASE ASC", null);
+            Cursor db_cursor_completed = DB.rawQuery("Select * From TaskTable where ListName = '" + ListName + "' and TaskCompleted = '1' order by TaskName COLLATE NOCASE ASC", null);
             if(db_cursor.getCount() != 0) {
                 if(db_cursor.moveToFirst())
                 {
@@ -78,7 +78,7 @@ public class TaskHomePage extends AppCompatActivity {
                         ArrayTaskTitle.add(TaskName);
                         ArrayTaskDueDate.add(TaskExpiryDate);
                         ArrayTaskComplete.add(TaskCompleted);
-                    } while (db_cursor.moveToNext());
+                    } while (db_cursor_completed.moveToNext());
                 }
             }
             db_cursor.close();
@@ -209,11 +209,16 @@ public class TaskHomePage extends AppCompatActivity {
                         Data.close();
                         Toast.makeText(TaskHomePage.this, "Task is successfully deleted.",Toast.LENGTH_SHORT).show();
 // Below code will change status of list in main page.
-                        Cursor db_ct = myDB.rawQuery("Select * from Tasktable where ListName = '" + GV_ListName + "' and TaskCompleted = '1'", null);
-                        Cursor db_tt = myDB.rawQuery("Select * from Tasktable where ListName = '" + GV_ListName + "'", null);
-                        if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
+                        Cursor db_ct = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskCompleted = '1'", null);
+                        Cursor db_tt = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "'", null);
+                        if(db_tt.getCount() == db_ct.getCount() && db_tt.getCount() != 0)
                         {
                             String UpdateRecord = "Update ToDoListTable set Completed = 1 where ListName = '" + GV_ListName + "'";
+                            myDB.execSQL(UpdateRecord);
+                        }
+                        else
+                        {
+                            String UpdateRecord = "Update ToDoListTable set Completed = 0 where ListName = '" + GV_ListName + "'";
                             myDB.execSQL(UpdateRecord);
                         }
 // Resetting page.
@@ -236,7 +241,7 @@ public class TaskHomePage extends AppCompatActivity {
                     myDB.execSQL(UR);
                     Intent resetPage = new Intent(TaskHomePage.this, TaskHomePage.class);
                     resetPage.putExtra("ListName",GV_ListName);
-                    Cursor c = myDB.rawQuery("Select * from Tasktable where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "' and TaskCompleted = '0'", null);
+                    Cursor c = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "' and TaskCompleted = '0'", null);
                     if(c.getCount() != 0)
                     {
                         startActivity(resetPage);
@@ -244,9 +249,9 @@ public class TaskHomePage extends AppCompatActivity {
                     }
                     else if(c.getCount() == 0)
                     {
-                        Cursor db_ct = myDB.rawQuery("Select * from Tasktable where ListName = '" + GV_ListName + "' and TaskCompleted = '1'", null);
-                        Cursor db_tt = myDB.rawQuery("Select * from Tasktable where ListName = '" + GV_ListName + "'", null);
-                        if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
+                        Cursor db_ct = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskCompleted = '1'", null);
+                        Cursor db_tt = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "'", null);
+                        if(db_tt.getCount() == db_ct.getCount() && db_tt.getCount() != 0)
                         {
                             String UpdateRecord = "Update ToDoListTable set Completed = 1 where ListName = '" + GV_ListName + "'";
                             myDB.execSQL(UpdateRecord);

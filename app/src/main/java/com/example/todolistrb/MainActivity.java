@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -63,18 +62,6 @@ public class MainActivity extends AppCompatActivity
                         Cursor db_ct = DB.rawQuery("Select * from Tasktable where ListName = '" + ListName + "' and TaskCompleted = '1'", null);
                         Cursor db_tt = DB.rawQuery("Select * from Tasktable where ListName = '" + ListName + "'", null);
                         ArrayListTitle.add(ListName);
-// Below is code for setting completed status.
-                        if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
-                        {
-                            String UR = "Update ToDoListTable set Completed = 1 where ListName = '" + ListName + "'";
-                            DB.execSQL(UR);
-                            ArrayListTitle.remove(ListName);
-                        }
-                        else
-                        {
-                            String UR = "Update ToDoListTable set Completed = 0 where ListName = '" + ListName + "'";
-                            DB.execSQL(UR);
-                        }
 // Below is code for getting count of completed task for all lists from db.
                         if(db_ct.getCount() != 0)
                         {
@@ -96,6 +83,16 @@ public class MainActivity extends AppCompatActivity
                         {
                             String tt1 = "0";
                             TT.add(tt1);
+                        }
+                        if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
+                        {
+                            String UR = "Update ToDoListTable set Completed = 1 where ListName = '" + ListName + "'";
+                            DB.execSQL(UR);
+                        }
+                        else
+                        {
+                            String UR = "Update ToDoListTable set Completed = 0 where ListName = '" + ListName + "'";
+                            DB.execSQL(UR);
                         }
                     }while (db_cursor.moveToNext());
                     MA = new MyAdapter(this, ArrayListTitle, CT, TT);
@@ -123,17 +120,6 @@ public class MainActivity extends AppCompatActivity
                         String ListName1 = db_cursor_completed.getString(db_cursor_completed.getColumnIndex("ListName"));
                         Cursor db_tt = DB.rawQuery("Select * from Tasktable where ListName = '" + ListName1 + "'", null);
                         Cursor db_ct = DB.rawQuery("Select * from Tasktable where ListName = '" + ListName1 + "' and TaskCompleted = '1'", null);
-// Below is code for setting completed status.
-                        if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
-                        {
-                            String UR = "Update ToDoListTable set Completed = 1 where ListName = '" + ListName1 + "'";
-                            DB.execSQL(UR);
-                        }
-                        else
-                        {
-                            String UR = "Update ToDoListTable set Completed = 0 where ListName = '" + ListName1 + "'";
-                            DB.execSQL(UR);
-                        }
                         ArrayListTitle.add(ListName1);
 // Below is code for getting count of completed task for all lists from db.
                         if(db_ct.getCount() != 0)
@@ -157,19 +143,19 @@ public class MainActivity extends AppCompatActivity
                             String tt1 = "0";
                             TT.add(tt1);
                         }
+                        if(db_tt.getCount() == db_ct.getCount() && db_ct.getCount() != 0)
+                        {
+                            String UR = "Update ToDoListTable set Completed = 1 where ListName = '" + ListName1 + "'";
+                            DB.execSQL(UR);
+                        }
+                        else
+                        {
+                            String UR = "Update ToDoListTable set Completed = 0 where ListName = '" + ListName1 + "'";
+                            DB.execSQL(UR);
+                        }
                     }while (db_cursor_completed.moveToNext());
                     MA = new MyAdapter(this, ArrayListTitle, CT, TT);
                     ListTitleView.setAdapter(MA);
-// We are sending ListName to TaskHomePage using below code.
-//                    ListTitleView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                            String pos = ArrayListTitle.get(position);
-//                            Intent intent = new Intent(MainActivity.this, TaskHomePage.class);
-//                            intent.putExtra("ListName", pos);
-//                            startActivity(intent);
-//                        }
-//                    });
                 }
                 db_cursor_completed.close();
             }
@@ -204,6 +190,7 @@ public class MainActivity extends AppCompatActivity
             public TextView CompletedTaskTextBox;
             public Button EditTitleButton;
             public Button DeleteTitleButton;
+            public LinearLayout HomePageContainer;
         }
         MyAdapter(Context c, ArrayList<String> title, ArrayList<String> ct, ArrayList<String> tt)
         {
@@ -242,6 +229,7 @@ public class MainActivity extends AppCompatActivity
                 Holder.TotalTaskTextBox = convertView.findViewById(R.id.TotalTaskTextBox);
                 Holder.EditTitleButton = convertView.findViewById(R.id.ListEditButton);
                 Holder.DeleteTitleButton = convertView.findViewById(R.id.ListDeleteButton);
+                Holder.HomePageContainer = convertView.findViewById(R.id.HomePageContainer);
                 convertView.setTag(Holder);
             }
             else
@@ -251,7 +239,7 @@ public class MainActivity extends AppCompatActivity
             Holder.ListTitleTextBox.setText(mtitle.get(position));
             Holder.CompletedTaskTextBox.setText("Completed Tasks : " + mct.get(position));
             Holder.TotalTaskTextBox.setText("Total Tasks : " + mtt.get(position));
-            Holder.ListTitleTextBox.setOnClickListener(new View.OnClickListener() {
+            Holder.HomePageContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view)
                 {
@@ -282,7 +270,6 @@ public class MainActivity extends AppCompatActivity
                         startActivity(RefreshPage);
                         Toast.makeText(MainActivity.this,"List deleted successfully.",Toast.LENGTH_SHORT).show();
                     }
-                    Data.close();
                 }
             });
             return convertView;

@@ -6,4 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".EditListTitle">
 
+        <EditText
+            android:id="@+id/EListTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:ems="10"
+            android:hint="Enter updated list title"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.10" />
+
+        <Button
+            android:id="@+id/EUpdateListButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="UpdateListFunction"
+            android:padding="10dp"
+            android:text="Update"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EListTitle"
+            app:layout_constraintVertical_bias="0.01" />
+
+        <Button
+            android:id="@+id/EResetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="ResetButton"
+            android:padding="10dp"
+            android:text="Reset"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EListTitle"
+            app:layout_constraintVertical_bias="0.01" />
+
+        <Button
+            android:id="@+id/EGoBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="GoBackFunction"
+            android:padding="10dp"
+            android:text="Back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.90"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EListTitle"
+            app:layout_constraintVertical_bias="0.01" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
