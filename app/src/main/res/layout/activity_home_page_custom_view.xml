@@ -1,43 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="15dp">
-
-    <TextView
-        android:id="@+id/ListTitleTextBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:hint="Example List Title"
-        android:padding="10dp"
-        android:textColorHint="#000"/>
+    android:layout_margin="15dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ListTitleTextBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Example List Title"
+            android:padding="10dp"
+            android:textColorHint="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TotalTaskTextBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Total Tasks"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/CompletedTaskTextBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Completed Tasks"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/NearestTaskDueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Nearest Task Due"
+            android:padding="10dp"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/TotalTaskTextBox"
+        <Button
+            android:id="@+id/ListEditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:hint="Total Tasks"/>
+            android:text="Edit"
+            android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/CompletedTaskTextBox"
+        <Button
+            android:id="@+id/ListDeleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:padding="10dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:hint="Completed Tasks"/>
+            android:text="Delete"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
