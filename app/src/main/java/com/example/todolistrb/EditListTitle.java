@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditListTitle extends AppCompatActivity {
@@ -31,30 +30,34 @@ public class EditListTitle extends AppCompatActivity {
     }
 
 // Below code is for update function.
-    public void UpdateListFunction(View view)
-    {
-        EditText EListTitle = findViewById(R.id.EListTitle);
+    public void UpdateListFunction(View view) {
         Intent updatedRefresh = new Intent(EditListTitle.this, MainActivity.class);
-        Cursor db_ct = myDB.rawQuery("Select * from ToDoListTable where ListName = '" + GV_ListTitle + "' and TaskCompleted = '1'", null);
-
-        if(EListTitle.getText().toString() != null)
-        {
-            String UR = "Update ToDoListTable set ListName = '" + EListTitle.getText().toString() + "' where ListName = '" + GV_ListTitle + "'";
+        EditText UpdatedListTitle = findViewById(R.id.EListTitle);
+        Cursor cursor = myDB.rawQuery("Select * from ToDoListTable where ListName = '" + UpdatedListTitle.getText().toString() + "'", null);
+        if(cursor.getCount() == 0) {
+            String UpdatedValue;
+            UpdatedValue = UpdatedListTitle.getText().toString();
+            SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
+            String UR = "Update ToDoListTable set ListName = '" + UpdatedValue + "' where ListName = '" + GV_ListTitle + "'";
             myDB.execSQL(UR);
-            String UR1 = "Update TaskTable set ListName = '" + EListTitle.getText().toString() + "' where ListName = '" + GV_ListTitle + "'";
+            String UR1 = "Update TaskTable set ListName = '" + UpdatedValue + "' where ListName = '" + GV_ListTitle + "'";
             myDB.execSQL(UR1);
-            startActivity(updatedRefresh);
-        }
-        else if(EListTitle.getText().toString() == null)
-        {
-            Toast.makeText(EditListTitle.this, "List title cannot be edited. Please try again.",Toast.LENGTH_SHORT).show();
+            Cursor check_cursor = myDB.rawQuery("Select * from ToDoListTable where ListName = '" + UpdatedValue + "'", null);
+            if(check_cursor.getCount() != 0)
+            {
+                startActivity(updatedRefresh);
+                Toast.makeText(EditListTitle.this,"List updated successfully.",Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(EditListTitle.this, "List title cannot be edited. Please try again.", Toast.LENGTH_SHORT).show();
+            }
         }
         else
         {
-            Toast.makeText(EditListTitle.this, "List title cannot be edited. Please try again.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditListTitle.this,"List value already exist. Please try again with different name.",Toast.LENGTH_SHORT).show();
         }
     }
-
 // Below code is for reset function.
     public void ResetButton(View view)
     {

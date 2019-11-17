@@ -1,7 +1,6 @@
 package com.example.todolistrb;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,9 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class TaskEditPage extends AppCompatActivity {
@@ -36,15 +33,11 @@ public class TaskEditPage extends AppCompatActivity {
         this.myDB = DB;
         this.GV_ListName = ListName;
         this.GV_TaskName = TaskName;
-        Cursor db_cursor = DB.rawQuery("Select * From TaskTable where ListName = '" + ListName + "' and TaskName = '" + TaskName + "'", null);
-//        String DueDate = db_cursor.getString(db_cursor.getColumnIndex("DueDate"));
-//        Toast.makeText(this,""+DueDate,Toast.LENGTH_LONG).show();
         TextView ListTitleTextBox = findViewById(R.id.EListTitleTextBox);
         EditText EditTaskTextBox = findViewById(R.id.EditTaskTextBox);
         final EditText ETaskDateTextBox = findViewById(R.id.ETaskDateTextBox);
         ListTitleTextBox.setText(ListName);
         EditTaskTextBox.setText(TaskName);
-//        ETaskDateTextBox.setText(new SimpleDateFormat("dd-MM-yyyy",DueDate));
 // Calander code starts.
         final Calendar myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
@@ -69,10 +62,40 @@ public class TaskEditPage extends AppCompatActivity {
                 new DatePickerDialog(TaskEditPage.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+    }
 // Calander code ends.
+
+    public void UpdateTask(View view)
+    {
+        EditText UpdatedTaskTitle = findViewById(R.id.EditTaskTextBox);
+        EditText UpdatedTaskDueDate = findViewById(R.id.ETaskDateTextBox);
+        Cursor cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'", null);
+        Intent updatedRefresh = new Intent(TaskEditPage.this, TaskHomePage.class);
+        if(cursor.getCount() == 0)
+        {
+            String UR = "Update TaskTable set TaskName = '" + UpdatedTaskTitle.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'";
+            myDB.execSQL(UR);
+            String UR1 = "Update TaskTable set DueDate = '" + UpdatedTaskDueDate.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'";
+            myDB.execSQL(UR1);
+            Cursor check_cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'", null);
+            if(check_cursor.getCount() == 0)
+            {
+                updatedRefresh.putExtra("ListName",GV_ListName);
+                startActivity(updatedRefresh);
+                Toast.makeText(TaskEditPage.this,"List updated successfully.",Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(TaskEditPage.this, "List title cannot be edited. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(TaskEditPage.this,"Task with same name already exist in this list. Please try again with different task name.",Toast.LENGTH_SHORT).show();
+        }
     }
 
-    // Below is code to reset field values.
+// Below is code to reset field values.
     public void ResetFunction(View view)
     {
         EditText TaskTitleTextBox = findViewById(R.id.EditTaskTextBox);
@@ -90,7 +113,6 @@ public class TaskEditPage extends AppCompatActivity {
             Toast.makeText(TaskEditPage.this, "Reset successful.", Toast.LENGTH_SHORT).show();
         }
     }
-
 // Below is code to navigate to Task home page.
     public void GoBackFunction(View view)
     {
