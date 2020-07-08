@@ -1,4 +1,4 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
@@ -34,7 +34,7 @@ public class TaskHomePage extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
         TextView ListTitleHeading = findViewById(R.id.ListTitleHeading);
-        ListTitleHeading.setText("Todo list Name : " + ListName);
+        ListTitleHeading.setText(ListName);
         this.GV_ListName = ListName;
 
 // Displaying data from database to my ListTitleView on Home Page.
@@ -92,27 +92,39 @@ public class TaskHomePage extends AppCompatActivity {
 // If there are no entries in DB, it will display below message to user.
         else
         {
-            ArrayTaskTitle.add("No task created yet to display here.");
+            ArrayTaskTitle.add("Create new task to display here");
             ArrayTaskTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ArrayTaskTitle);
             TaskTitleView.setAdapter(ArrayTaskTitleAdapter);
         }
         db_cursor_all_task.close();
     }
 
-    public void AddNewTask(View view)
+// Below code executes when user goes back in application.
+    @Override
+    protected void onRestart()
     {
+        super.onRestart();
+        this.finish();
+        Intent PageRefresh = new Intent(this, MainActivity.class);
+        startActivity(PageRefresh);
+    }
+
+    public void CreateNewTask(View view) {
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
         Intent CreateNewTask = new Intent(TaskHomePage.this, CreateNewTask.class);
         CreateNewTask.putExtra("ListName", ListName);
         startActivity(CreateNewTask);
     }
-
-// Below is code to navigate to List home page.
+// Below is code to navigate back in application.
     public void GoBackFunction(View view)
     {
-        Intent GoBack = new Intent(TaskHomePage.this, MainActivity.class);
-        startActivity(GoBack);
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 //Custom view adapter code.
     class TaskMyAdapter extends BaseAdapter
@@ -178,12 +190,12 @@ public class TaskHomePage extends AppCompatActivity {
             if(mtaskcompleted.get(position) == 0)
             {
                 Holder.TaskCompletedCheckBox.setChecked(false);
-                Holder.TaskCompletedCheckBox.setEnabled(true);
+//                Holder.TaskCompletedCheckBox.setEnabled(true);
             }
             else if(mtaskcompleted.get(position) == 1)
             {
                 Holder.TaskCompletedCheckBox.setChecked(true);
-                Holder.TaskCompletedCheckBox.setEnabled(false);
+//                Holder.TaskCompletedCheckBox.setEnabled(false);
             }
             Holder.EditButton.setOnClickListener(new View.OnClickListener()
             {
@@ -237,15 +249,23 @@ public class TaskHomePage extends AppCompatActivity {
                 @Override
                 public void onClick(View view)
                 {
-                    String UR = "Update TaskTable set TaskCompleted = 1 where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "'";
-                    myDB.execSQL(UR);
+                    if(mtaskcompleted.get(position) == 0) {
+                        String UR = "Update TaskTable set TaskCompleted = 1 where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "'";
+                        myDB.execSQL(UR);
+                        Toast.makeText(TaskHomePage.this, "Task is successfully completed.", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        String UR = "Update TaskTable set TaskCompleted = 0 where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "'";
+                        myDB.execSQL(UR);
+                        Toast.makeText(TaskHomePage.this, "Task marked as incomplete.", Toast.LENGTH_SHORT).show();
+                    }
                     Intent resetPage = new Intent(TaskHomePage.this, TaskHomePage.class);
                     resetPage.putExtra("ListName",GV_ListName);
                     Cursor c = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "' and TaskCompleted = '0'", null);
                     if(c.getCount() != 0)
                     {
                         startActivity(resetPage);
-                        Toast.makeText(TaskHomePage.this, "Oops! Something went wrong. Please refresh page to check status.", Toast.LENGTH_SHORT).show();
                     }
                     else if(c.getCount() == 0)
                     {
@@ -257,7 +277,6 @@ public class TaskHomePage extends AppCompatActivity {
                             myDB.execSQL(UpdateRecord);
                         }
                         startActivity(resetPage);
-                        Toast.makeText(TaskHomePage.this, "Task is successfully completed.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

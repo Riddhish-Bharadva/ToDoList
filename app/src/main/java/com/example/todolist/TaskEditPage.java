@@ -1,17 +1,22 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.todolist.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -21,6 +26,7 @@ public class TaskEditPage extends AppCompatActivity {
     String GV_TaskName;
     SQLiteDatabase myDB;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +48,7 @@ public class TaskEditPage extends AppCompatActivity {
         final Calendar myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
@@ -71,7 +78,7 @@ public class TaskEditPage extends AppCompatActivity {
         EditText UpdatedTaskDueDate = findViewById(R.id.ETaskDateTextBox);
         Cursor cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'", null);
         Intent updatedRefresh = new Intent(TaskEditPage.this, TaskHomePage.class);
-        if(cursor.getCount() == 0)
+        if(cursor.getCount() == 0 && UpdatedTaskTitle.getText().length() != 0 && UpdatedTaskDueDate.getText().length() != 0)
         {
             String UR = "Update TaskTable set TaskName = '" + UpdatedTaskTitle.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'";
             myDB.execSQL(UR);
@@ -81,12 +88,39 @@ public class TaskEditPage extends AppCompatActivity {
             if(check_cursor.getCount() == 0)
             {
                 updatedRefresh.putExtra("ListName",GV_ListName);
+                Toast.makeText(TaskEditPage.this,"Task updated successfully.",Toast.LENGTH_SHORT).show();
+                this.finish();
                 startActivity(updatedRefresh);
-                Toast.makeText(TaskEditPage.this,"List updated successfully.",Toast.LENGTH_SHORT).show();
             }
             else
             {
-                Toast.makeText(TaskEditPage.this, "List title cannot be edited. Please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TaskEditPage.this, "Task cannot be edited. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(cursor.getCount() != 0 && UpdatedTaskDueDate.getText().length() != 0)
+        {
+            String UR1 = "Update TaskTable set DueDate = '" + UpdatedTaskDueDate.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'";
+            myDB.execSQL(UR1);
+            updatedRefresh.putExtra("ListName",GV_ListName);
+            Toast.makeText(TaskEditPage.this,"Task updated successfully.",Toast.LENGTH_SHORT).show();
+            this.finish();
+            startActivity(updatedRefresh);
+        }
+        else if(cursor.getCount() == 0 && UpdatedTaskTitle.getText().length() != 0 && UpdatedTaskDueDate.getText().length() == 0)
+        {
+            String UR = "Update TaskTable set TaskName = '" + UpdatedTaskTitle.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'";
+            myDB.execSQL(UR);
+            Cursor check_cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'", null);
+            if(check_cursor.getCount() == 0)
+            {
+                updatedRefresh.putExtra("ListName",GV_ListName);
+                Toast.makeText(TaskEditPage.this,"Task updated successfully.",Toast.LENGTH_SHORT).show();
+                this.finish();
+                startActivity(updatedRefresh);
+            }
+            else
+            {
+                Toast.makeText(TaskEditPage.this, "Task cannot be edited. Please try again.", Toast.LENGTH_SHORT).show();
             }
         }
         else
@@ -116,8 +150,14 @@ public class TaskEditPage extends AppCompatActivity {
 // Below is code to navigate to Task home page.
     public void GoBackFunction(View view)
     {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent GoBack = new Intent(TaskEditPage.this, TaskHomePage.class);
         GoBack.putExtra("ListName", GV_ListName);
+        this.finish();
         startActivity(GoBack);
     }
 }

@@ -1,11 +1,13 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -163,13 +169,22 @@ public class MainActivity extends AppCompatActivity
 // Below message will be printed if there are no lists created by users.
         else
         {
-            ArrayListTitle.add("No list created yet to display here.");
+            ArrayListTitle.add("Create new list to display here");
             ArrayListTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ArrayListTitle);
             ListTitleView.setAdapter(ArrayListTitleAdapter);
         }
     }
+// Below code executes when user goes back in application.
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        this.finish();
+        Intent PageRefresh = new Intent(this, MainActivity.class);
+        startActivity(PageRefresh);
+    }
 
-    // Below is code for button on clicking on home to navigate to new list creation page.
+// Below is code for button on clicking on home to navigate to new list creation page.
     public void CreateNewList (View view)
     {
         Intent CreateNewList = new Intent(MainActivity.this, CreateNewToDoList.class);
@@ -183,10 +198,12 @@ public class MainActivity extends AppCompatActivity
         ArrayList<String> mtitle;
         ArrayList<String> mct;
         ArrayList<String> mtt;
+        SQLiteDatabase DB;
         public class ViewHolder
         {
             public TextView ListTitleTextBox;
             public TextView TotalTaskTextBox;
+            public TextView TaskStatusTextView;
             public TextView CompletedTaskTextBox;
             public Button EditTitleButton;
             public Button DeleteTitleButton;
@@ -229,6 +246,7 @@ public class MainActivity extends AppCompatActivity
                 Holder.TotalTaskTextBox = convertView.findViewById(R.id.TotalTaskTextBox);
                 Holder.EditTitleButton = convertView.findViewById(R.id.ListEditButton);
                 Holder.DeleteTitleButton = convertView.findViewById(R.id.ListDeleteButton);
+                Holder.TaskStatusTextView = convertView.findViewById(R.id.TaskStatus);
                 Holder.HomePageContainer = convertView.findViewById(R.id.HomePageContainer);
                 convertView.setTag(Holder);
             }
@@ -237,6 +255,49 @@ public class MainActivity extends AppCompatActivity
                 Holder = (ViewHolder) convertView.getTag();
             }
             Holder.ListTitleTextBox.setText(mtitle.get(position));
+// Below is code to update Task status text view.
+            Holder.TaskStatusTextView.setText("No new updates on tasks.");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            Date d = new Date();
+            String Date1 = sdf.format(d.getTime());
+            Log.i("Log.i","Date1"+Date1);
+            Date DateToday = null;
+            try {
+                DateToday = sdf.parse(Date1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Log.i("Log.i","DateToday"+DateToday);
+            Cursor db_Connection = myDB.rawQuery("Select * From TaskTable where ListName = '" + mtitle.get(position) + "' and TaskCompleted = 0", null);
+            if(db_Connection.getCount() != 0)
+            {
+                if(db_Connection.moveToFirst()) {
+                    Log.i("Log.i", "Inside if Condition.");
+                    do {
+                        Log.i("Log.i", "Inside do while Condition.");
+                        String Date2 = db_Connection.getString(db_Connection.getColumnIndex("DueDate"));
+                        Log.i("Log.i", "DueDate from DB " + Date2);
+                        Date DueDate = null;
+                        try {
+                            DueDate = sdf.parse(Date2);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        Log.i("Log.i", "DueDate " + DueDate);
+                        if (DueDate.before(DateToday)) {
+                            Holder.TaskStatusTextView.setText("There are few tasks with due date in past.");
+                            Holder.TaskStatusTextView.setBackgroundColor(Color.parseColor("#800000"));
+                            Holder.TaskStatusTextView.setTextColor(Color.parseColor("#ffffff"));
+                            break; // I am breaking loop here so that even if next task have due date today, will not be checked as our priority is to highlight expired tasks.
+                        }
+                        else if (DueDate.compareTo(DateToday) == 0) {
+                            Holder.TaskStatusTextView.setText("There are few tasks with due date today.");
+                            Holder.TaskStatusTextView.setBackgroundColor(Color.parseColor("#FFD700"));
+                        }
+                    } while (db_Connection.moveToNext());
+                }
+            }
+// Code to update task status text view ends here.
             Holder.CompletedTaskTextBox.setText("Completed Tasks : " + mct.get(position));
             Holder.TotalTaskTextBox.setText("Total Tasks : " + mtt.get(position));
             Holder.HomePageContainer.setOnClickListener(new View.OnClickListener() {
@@ -268,7 +329,7 @@ public class MainActivity extends AppCompatActivity
                     if(Data.getCount() == 0) {
                         Intent RefreshPage = new Intent(MainActivity.this,MainActivity.class);
                         startActivity(RefreshPage);
-                        Toast.makeText(MainActivity.this,"List deleted successfully.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"List deleted successfully",Toast.LENGTH_SHORT).show();
                     }
                 }
             });

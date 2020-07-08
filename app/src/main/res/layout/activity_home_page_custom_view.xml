@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:hint="Example List Title"
             android:padding="10dp"
-            android:textColorHint="#000"
-            android:textSize="18sp"
+            android:textColorHint="#000000"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -47,15 +47,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/NearestTaskDueDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Nearest Task Due"
-            android:padding="10dp"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -67,19 +58,28 @@
             android:id="@+id/ListEditButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:text="Edit"
-            android:textSize="15sp" />
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/ListDeleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"
+            android:layout_marginLeft="10sp"
             android:text="Delete"
-            android:textSize="15sp" />
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/TaskStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColorHint="#000000"
+        android:textStyle="bold"
+        android:text="No new update on tasks."/>
 
 </LinearLayout>

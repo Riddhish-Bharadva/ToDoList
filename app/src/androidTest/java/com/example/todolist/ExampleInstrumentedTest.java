@@ -1,4 +1,4 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.todolistrb", appContext.getPackageName());
+        assertEquals("com.example.todolist", appContext.getPackageName());
     }
 }

@@ -4,22 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateNewToDoList">
+    tools:context="com.example.todolist.CreateNewToDoList">
+
+    <TextView
+        android:id="@+id/CreateListTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Create New List"
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.01" />
+
+<!--
+    <Button
+        android:id="@+id/GoBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="GoBackFunction"
+        android:text="Back"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toBottomOf="@id/CreateListTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.01"
+        app:layout_constraintHorizontal_bias="0.01" />
+-->
 
     <EditText
         android:id="@+id/ListTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:ems="10"
-        android:hint="Enter List Title"
-        android:inputType="textPersonName"
         android:padding="10dp"
+        android:hint="List Title"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/CreateListTextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.10" />
+        app:layout_constraintVertical_bias="0.01" />
 
     <Button
         android:id="@+id/CreateListButton"
@@ -27,13 +58,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:onClick="CreateListFunction"
-        android:padding="10dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         android:text="Create"
+        app:layout_constraintTop_toBottomOf="@id/ListTitle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.10"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ListTitle"
         app:layout_constraintVertical_bias="0.01" />
 
     <Button
@@ -42,42 +74,30 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:onClick="ResetFunction"
-        android:padding="10dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         android:text="Reset"
+        app:layout_constraintTop_toBottomOf="@id/ListTitle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ListTitle"
         app:layout_constraintVertical_bias="0.01" />
 
-    <Button
-        android:id="@+id/GoBackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:onClick="GoBackFunction"
-        android:padding="10dp"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.90"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ListTitle"
-        app:layout_constraintVertical_bias="0.01" />
-
-    <Button
+<!--    <Button
         android:id="@+id/DeleteAllLists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:onClick="DeleteAllListsFromDB"
-        android:padding="10dp"
-        android:text="Delete Existing Lists"
+        android:text="Delete All"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ListTitle"
         app:layout_constraintVertical_bias="0.16" />
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

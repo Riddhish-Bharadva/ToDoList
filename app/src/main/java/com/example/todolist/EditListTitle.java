@@ -1,7 +1,6 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.todolist.R;
 
 public class EditListTitle extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class EditListTitle extends AppCompatActivity {
         Intent updatedRefresh = new Intent(EditListTitle.this, MainActivity.class);
         EditText UpdatedListTitle = findViewById(R.id.EListTitle);
         Cursor cursor = myDB.rawQuery("Select * from ToDoListTable where ListName = '" + UpdatedListTitle.getText().toString() + "'", null);
-        if(cursor.getCount() == 0) {
+        if(cursor.getCount() == 0 && UpdatedListTitle.getText().length() != 0) {
             String UpdatedValue;
             UpdatedValue = UpdatedListTitle.getText().toString();
             SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
@@ -46,7 +47,7 @@ public class EditListTitle extends AppCompatActivity {
             if(check_cursor.getCount() != 0)
             {
                 startActivity(updatedRefresh);
-                Toast.makeText(EditListTitle.this,"List updated successfully.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditListTitle.this,"List title is updated successfully.",Toast.LENGTH_SHORT).show();
             }
             else
             {
@@ -55,7 +56,7 @@ public class EditListTitle extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(EditListTitle.this,"List value already exist. Please try again with different name.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditListTitle.this,"List title already exist. Please try again with different title.",Toast.LENGTH_SHORT).show();
         }
     }
 // Below code is for reset function.
@@ -72,10 +73,15 @@ public class EditListTitle extends AppCompatActivity {
             Toast.makeText(EditListTitle.this, "List title is already default.", Toast.LENGTH_SHORT).show();
         }
     }
-// Below is code to navigate to List home page.
+// Below is code to navigate back in application.
     public void GoBackFunction(View view)
     {
-        Intent GoBack = new Intent(EditListTitle.this, MainActivity.class);
-        startActivity(GoBack);
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

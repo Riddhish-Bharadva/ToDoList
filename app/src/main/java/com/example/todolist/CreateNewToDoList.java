@@ -1,4 +1,4 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.todolist.R;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -51,7 +54,10 @@ public class CreateNewToDoList extends AppCompatActivity {
                 if(Status != -1)
                 {
                     ListTitle.setText(null);
-                    Toast.makeText(CreateNewToDoList.this, "New list created successfully.",Toast.LENGTH_SHORT).show();
+                    Intent GoBack = new Intent(CreateNewToDoList.this, MainActivity.class);
+                    Toast.makeText(CreateNewToDoList.this, "List is successfully created.",Toast.LENGTH_SHORT).show();
+                    this.finish();
+                    startActivity(GoBack);
                 }
                 else
                 {
@@ -88,11 +94,16 @@ public class CreateNewToDoList extends AppCompatActivity {
         }
     }
 
-// Below is code to navigate to home page.
+// Below is code to navigate back in application.
     public void GoBackFunction(View view)
     {
-        Intent GoBack = new Intent(CreateNewToDoList.this, MainActivity.class);
-        startActivity(GoBack);
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
 // Below is code to delete all lists from DB.
@@ -109,9 +120,15 @@ public class CreateNewToDoList extends AppCompatActivity {
             DB.execSQL("DELETE from TaskTable");
             Cursor db_cursor1 = DB.rawQuery("Select * From ToDoListTable", null);
             Cursor db_cursor2 = DB.rawQuery("Select * From TaskTable", null);
-            if (db_cursor1.getCount() == 0 && db_cursor2.getCount() == 0) {
+            if (db_cursor1.getCount() == 0 && db_cursor2.getCount() == 0)
+            {
+                Intent GoBack = new Intent(CreateNewToDoList.this, MainActivity.class);
                 Toast.makeText(CreateNewToDoList.this, "All lists are deleted successfully.", Toast.LENGTH_SHORT).show();
-            } else {
+                this.finish();
+                startActivity(GoBack);
+            }
+            else
+            {
                 Toast.makeText(CreateNewToDoList.this, "Failed to delete all Lists. Please try again.", Toast.LENGTH_SHORT).show();
             }
         }

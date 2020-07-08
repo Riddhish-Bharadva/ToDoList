@@ -1,5 +1,6 @@
-package com.example.todolistrb;
+package com.example.todolist;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
@@ -7,18 +8,23 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.todolist.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class CreateNewTask extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +36,13 @@ public class CreateNewTask extends AppCompatActivity {
 
 // Below code is setting List Name in it's Text Box.
         TextView ListTitleTextBox = findViewById(R.id.ListTitleTextBox);
-        ListTitleTextBox.setText("You are going to add a Task in " + ListName);
+        ListTitleTextBox.setText(ListName);
 // Below code is used to select date on create new task page.
         final Calendar myCalendar = Calendar.getInstance();
         final EditText TaskDate = findViewById(R.id.TaskDateTextBox);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
@@ -101,7 +108,11 @@ public class CreateNewTask extends AppCompatActivity {
                 {
                     NewTask.setText(null);
                     TaskDate.setText(null);
-                    Toast.makeText(CreateNewTask.this, "New task created successfully.", Toast.LENGTH_SHORT).show();
+                    Intent GoBack = new Intent(CreateNewTask.this, TaskHomePage.class);
+                    GoBack.putExtra("ListName", ListName);
+                    Toast.makeText(CreateNewTask.this, "Task is successfully created.", Toast.LENGTH_SHORT).show();
+                    this.finish();
+                    startActivity(GoBack);
                 }
                 else
                 {
@@ -140,13 +151,19 @@ public class CreateNewTask extends AppCompatActivity {
         }
     }
 
-// Below is code to navigate to Task home page.
+// Below is code to navigate back in application.
     public void GoBackFunction(View view)
     {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
         Intent GoBack = new Intent(CreateNewTask.this, TaskHomePage.class);
         GoBack.putExtra("ListName", ListName);
         startActivity(GoBack);
+        finish();
     }
 }

@@ -4,51 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskHomePage">
+    tools:context="com.example.todolist.TaskHomePage">
 
     <TextView
         android:id="@+id/ListTitleHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#000"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:textSize="18sp"
+        android:text="Sample list title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
-
-    <Button
-        android:id="@+id/AddTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:onClick="AddNewTask"
-        android:padding="10dp"
-        android:text="Add New Task"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintLeft_toLeftOf="@id/ListTitleHeading"
-        app:layout_constraintRight_toRightOf="@id/ListTitleHeading"
-        app:layout_constraintTop_toBottomOf="@id/ListTitleHeading"
-        app:layout_constraintVertical_bias="0" />
-
-    <Button
-        android:id="@+id/GoBackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:onClick="GoBackFunction"
-        android:padding="10dp"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.80"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ListTitleHeading"
         app:layout_constraintVertical_bias="0" />
 
     <ListView
@@ -56,15 +26,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:layout_weight="4"
         android:padding="10dp"
-        android:text="No List created yet to Display."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/AddTaskButton"
-        app:layout_constraintVertical_bias="0.15">
+        app:layout_constraintTop_toBottomOf="@id/ListTitleHeading"
+        app:layout_constraintVertical_bias="0">
 
     </ListView>
+
+    <Button
+        android:id="@+id/AddTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:background="@drawable/round_button"
+        android:textColor="#ffffff"
+        android:minWidth="50dip"
+        android:minHeight="50dip"
+        android:onClick="CreateNewTask"
+        android:text="+"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

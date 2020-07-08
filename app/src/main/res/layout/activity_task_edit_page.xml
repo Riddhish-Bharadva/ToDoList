@@ -4,49 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaskEditPage">
-
+    tools:context="com.example.todolist.TaskEditPage">
+<!--
     <Button
         android:id="@+id/GoBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:onClick="GoBackFunction"
-        android:padding="10dp"
         android:text="Back"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.90"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ETaskDateTextBox"
-        app:layout_constraintVertical_bias="0.01" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+-->
     <TextView
         android:id="@+id/EListTitleTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="List Name"
         android:padding="10dp"
-        android:textSize="18sp"
+        android:hint="List Name"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/EditTaskTextBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="Enter new name for this task."
         android:padding="10dp"
+        android:hint="Task Name"
         android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@id/EListTitleTextBox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/EListTitleTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
     <EditText
@@ -54,11 +55,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
+        android:padding="10dp"
         android:clickable="true"
         android:editable="false"
         android:focusable="false"
-        android:hint="Please select an updated date"
-        android:padding="10dp"
+        android:hint="Select Date"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -67,29 +68,31 @@
         app:layout_constraintVertical_bias="0.01" />
 
     <Button
-        android:id="@+id/ResetButton"
+        android:id="@+id/UpdateTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:padding="10dp"
-        android:text="Reset"
+        android:onClick="UpdateTask"
+        android:text="Update"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ETaskDateTextBox"
         app:layout_constraintVertical_bias="0.01" />
 
     <Button
-        android:id="@+id/UpdateTaskButton"
+        android:id="@+id/ResetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:onClick="UpdateTask"
-        android:padding="10dp"
-        android:text="Update"
+        android:text="Reset"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.10"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ETaskDateTextBox"
