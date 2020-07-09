@@ -173,15 +173,6 @@ public class MainActivity extends AppCompatActivity
             ListTitleView.setAdapter(ArrayListTitleAdapter);
         }
     }
-// Below code executes when user goes back in application.
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-        this.finish();
-        Intent PageRefresh = new Intent(this, MainActivity.class);
-        startActivity(PageRefresh);
-    }
 
 // Below is code for button on clicking on home to navigate to new list creation page.
     public void CreateNewList (View view)
@@ -321,6 +312,7 @@ public class MainActivity extends AppCompatActivity
                     Cursor Data = myDB.rawQuery("Select * from ToDoListTable where ListName = '" + mtitle.get(position) + "'", null);
                     if(Data.getCount() == 0) {
                         Intent RefreshPage = new Intent(MainActivity.this,MainActivity.class);
+                        finish();
                         startActivity(RefreshPage);
                         Toast.makeText(MainActivity.this,"List deleted successfully",Toast.LENGTH_SHORT).show();
                     }
@@ -328,5 +320,15 @@ public class MainActivity extends AppCompatActivity
             });
             return convertView;
         }
+    }
+
+// Below code executes when user goes back from Task Home Page.
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        Intent PageRefresh = new Intent(this, MainActivity.class);
+        this.finish();
+        startActivity(PageRefresh);
     }
 }

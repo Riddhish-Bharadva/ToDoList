@@ -15,7 +15,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class TaskEditPage extends AppCompatActivity {
@@ -44,8 +46,6 @@ public class TaskEditPage extends AppCompatActivity {
         if(db_Connection.getCount() != 0) {
             db_Connection.moveToFirst();
             String DueDate = db_Connection.getString(db_Connection.getColumnIndex("DueDate"));
-            Log.i("Log.i", String.valueOf(db_Connection));
-            Log.i("Log.i", DueDate);
             ETaskDateTextBox.setText(DueDate);
         }
         ListTitleTextBox.setText(ListName);
@@ -84,6 +84,7 @@ public class TaskEditPage extends AppCompatActivity {
         EditText UpdatedTaskDueDate = findViewById(R.id.ETaskDateTextBox);
         Cursor cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'", null);
         Intent updatedRefresh = new Intent(TaskEditPage.this, TaskHomePage.class);
+        updatedRefresh.putExtra("ListName",GV_ListName);
         if(cursor.getCount() == 0 && UpdatedTaskTitle.getText().length() != 0 && UpdatedTaskDueDate.getText().length() != 0)
         {
             String UR = "Update TaskTable set TaskName = '" + UpdatedTaskTitle.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'";
@@ -93,7 +94,6 @@ public class TaskEditPage extends AppCompatActivity {
             Cursor check_cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'", null);
             if(check_cursor.getCount() == 0)
             {
-                updatedRefresh.putExtra("ListName",GV_ListName);
                 Toast.makeText(TaskEditPage.this,"Task updated successfully.",Toast.LENGTH_SHORT).show();
                 this.finish();
                 startActivity(updatedRefresh);
@@ -105,10 +105,29 @@ public class TaskEditPage extends AppCompatActivity {
         }
         else if(cursor.getCount() != 0 && UpdatedTaskDueDate.getText().length() != 0)
         {
-            String UR1 = "Update TaskTable set DueDate = '" + UpdatedTaskDueDate.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'";
-            myDB.execSQL(UR1);
-            updatedRefresh.putExtra("ListName",GV_ListName);
-            Toast.makeText(TaskEditPage.this,"Task updated successfully.",Toast.LENGTH_SHORT).show();
+            if(cursor.moveToFirst()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                Date Date1 = null, Date2 = null;
+                try {
+                    Date1 = sdf.parse(UpdatedTaskDueDate.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Date2 = sdf.parse(cursor.getString(cursor.getColumnIndex("DueDate")));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (Date1 != null && Date2 != null && Date1.compareTo(Date2) != 0) // Checking if both dates are not same.
+                {
+                    Log.i("Log.i",cursor.getString(cursor.getColumnIndex("DueDate")));
+                    String UR1 = "Update TaskTable set DueDate = '" + UpdatedTaskDueDate.getText().toString() + "' where ListName = '" + GV_ListName + "' and TaskName = '" + UpdatedTaskTitle.getText().toString() + "'";
+                    myDB.execSQL(UR1);
+                    Toast.makeText(TaskEditPage.this, "Task updated successfully.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(TaskEditPage.this, "Task with same details cannot be updated.", Toast.LENGTH_SHORT).show();
+                }
+            }
             this.finish();
             startActivity(updatedRefresh);
         }
@@ -119,7 +138,6 @@ public class TaskEditPage extends AppCompatActivity {
             Cursor check_cursor = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'", null);
             if(check_cursor.getCount() == 0)
             {
-                updatedRefresh.putExtra("ListName",GV_ListName);
                 Toast.makeText(TaskEditPage.this,"Task updated successfully.",Toast.LENGTH_SHORT).show();
                 this.finish();
                 startActivity(updatedRefresh);
@@ -131,7 +149,7 @@ public class TaskEditPage extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(TaskEditPage.this,"Task with same name already exist in this list. Please try again with different task name.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(TaskEditPage.this,"Task with same name already exist in this list.",Toast.LENGTH_SHORT).show();
         }
     }
 

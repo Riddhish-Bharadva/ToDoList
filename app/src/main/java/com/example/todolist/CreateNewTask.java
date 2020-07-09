@@ -161,6 +161,6 @@ public class CreateNewTask extends AppCompatActivity {
         Intent GoBack = new Intent(CreateNewTask.this, TaskHomePage.class);
         GoBack.putExtra("ListName", ListName);
         startActivity(GoBack);
-        finish();
+        this.finish();
     }
 }

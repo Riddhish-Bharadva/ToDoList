@@ -104,32 +104,12 @@ public class TaskHomePage extends AppCompatActivity {
         db_cursor_all_task.close();
     }
 
-// Below code executes when user goes back in application.
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-        this.finish();
-        Intent PageRefresh = new Intent(this, MainActivity.class);
-        startActivity(PageRefresh);
-    }
-
     public void CreateNewTask(View view) {
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
         Intent CreateNewTask = new Intent(TaskHomePage.this, CreateNewTask.class);
         CreateNewTask.putExtra("ListName", ListName);
         startActivity(CreateNewTask);
-    }
-// Below is code to navigate back in application.
-    public void GoBackFunction(View view)
-    {
-        onBackPressed();
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 //Custom view adapter code.
     class TaskMyAdapter extends BaseAdapter
@@ -269,6 +249,7 @@ public class TaskHomePage extends AppCompatActivity {
 // Resetting page.
                         Intent resetPage = new Intent(TaskHomePage.this, TaskHomePage.class);
                         resetPage.putExtra("ListName",GV_ListName);
+                        finish();
                         startActivity(resetPage);
                     }
                     else
@@ -298,6 +279,7 @@ public class TaskHomePage extends AppCompatActivity {
                     Cursor c = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + mtasktitle.get(position) + "' and TaskCompleted = '0'", null);
                     if(c.getCount() != 0)
                     {
+                        finish();
                         startActivity(resetPage);
                     }
                     else if(c.getCount() == 0)
@@ -309,11 +291,31 @@ public class TaskHomePage extends AppCompatActivity {
                             String UpdateRecord = "Update ToDoListTable set Completed = 1 where ListName = '" + GV_ListName + "'";
                             myDB.execSQL(UpdateRecord);
                         }
+                        finish();
                         startActivity(resetPage);
                     }
                 }
             });
             return convertView;
         }
+    }
+
+// Below code executes when user goes back in application.
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+        this.finish();
+    }
+
+// Below is code to navigate back in application.
+    public void GoBackFunction(View view)
+    {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

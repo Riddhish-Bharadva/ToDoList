@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.todolist.R;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -94,18 +91,6 @@ public class CreateNewToDoList extends AppCompatActivity {
         }
     }
 
-// Below is code to navigate back in application.
-    public void GoBackFunction(View view)
-    {
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
 // Below is code to delete all lists from DB.
     public void DeleteAllListsFromDB(View view)
     {
@@ -133,5 +118,16 @@ public class CreateNewToDoList extends AppCompatActivity {
             }
         }
         DB.close();
+    }
+// Below is code to navigate back in application.
+    public void GoBackFunction(View view)
+    {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

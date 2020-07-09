@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.todolist.R;
-
 public class EditListTitle extends AppCompatActivity {
 
     SQLiteDatabase myDB;
@@ -82,6 +80,6 @@ public class EditListTitle extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        this.finish();
     }
 }
