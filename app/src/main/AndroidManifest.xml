@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.todolist">
+    package="com.rab.todolist">
 
     <application
         android:allowBackup="true"
@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.todolist.EditListTitle"></activity>
-        <activity android:name="com.example.todolist.TaskEditPage" />
-        <activity android:name="com.example.todolist.CreateNewTask" />
-        <activity android:name="com.example.todolist.TaskHomePage" />
-        <activity android:name="com.example.todolist.CreateNewToDoList" />
-        <activity android:name="com.example.todolist.MainActivity">
+        <activity android:name="com.rab.todolist.EditListTitle" />
+        <activity android:name="com.rab.todolist.TaskEditPage" />
+        <activity android:name="com.rab.todolist.CreateNewTask" />
+        <activity android:name="com.rab.todolist.TaskHomePage" />
+        <activity android:name="com.rab.todolist.CreateNewToDoList" />
+        <activity android:name="com.rab.todolist.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

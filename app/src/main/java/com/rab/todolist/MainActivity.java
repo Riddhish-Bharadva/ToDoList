@@ -1,6 +1,5 @@
-package com.example.todolist;
+package com.rab.todolist;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -297,7 +299,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View view)
                 {
-                    Intent EditListTitle = new Intent(MainActivity.this, EditListTitle.class);
+                    Intent EditListTitle = new Intent(MainActivity.this, com.rab.todolist.EditListTitle.class);
                     EditListTitle.putExtra("ListTitle",mtitle.get(position));
                     startActivity(EditListTitle);
                 }
@@ -311,7 +313,7 @@ public class MainActivity extends AppCompatActivity
                     myDB.execSQL(myQuery2);
                     Cursor Data = myDB.rawQuery("Select * from ToDoListTable where ListName = '" + mtitle.get(position) + "'", null);
                     if(Data.getCount() == 0) {
-                        Intent RefreshPage = new Intent(MainActivity.this,MainActivity.class);
+                        Intent RefreshPage = new Intent(MainActivity.this, MainActivity.class);
                         finish();
                         startActivity(RefreshPage);
                         Toast.makeText(MainActivity.this,"List deleted successfully",Toast.LENGTH_SHORT).show();

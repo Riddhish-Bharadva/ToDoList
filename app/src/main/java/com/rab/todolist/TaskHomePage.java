@@ -1,6 +1,5 @@
-package com.example.todolist;
+package com.rab.todolist;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +16,9 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,7 +109,7 @@ public class TaskHomePage extends AppCompatActivity {
     public void CreateNewTask(View view) {
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
-        Intent CreateNewTask = new Intent(TaskHomePage.this, CreateNewTask.class);
+        Intent CreateNewTask = new Intent(TaskHomePage.this, com.rab.todolist.CreateNewTask.class);
         CreateNewTask.putExtra("ListName", ListName);
         startActivity(CreateNewTask);
     }
