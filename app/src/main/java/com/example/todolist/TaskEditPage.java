@@ -9,14 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.todolist.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -33,18 +31,26 @@ public class TaskEditPage extends AppCompatActivity {
         setContentView(R.layout.activity_task_edit_page);
 
         SQLiteDatabase DB = this.openOrCreateDatabase("ToDoList", MODE_PRIVATE, null);
+        this.myDB = DB;
         Bundle bundle = getIntent().getExtras();
         String ListName = bundle.getString("ListName");
         String TaskName = bundle.getString("TaskName");
-        this.myDB = DB;
         this.GV_ListName = ListName;
         this.GV_TaskName = TaskName;
         TextView ListTitleTextBox = findViewById(R.id.EListTitleTextBox);
         EditText EditTaskTextBox = findViewById(R.id.EditTaskTextBox);
         final EditText ETaskDateTextBox = findViewById(R.id.ETaskDateTextBox);
+        Cursor db_Connection = myDB.rawQuery("Select * from TaskTable where ListName = '" + GV_ListName + "' and TaskName = '" + GV_TaskName + "'", null);
+        if(db_Connection.getCount() != 0) {
+            db_Connection.moveToFirst();
+            String DueDate = db_Connection.getString(db_Connection.getColumnIndex("DueDate"));
+            Log.i("Log.i", String.valueOf(db_Connection));
+            Log.i("Log.i", DueDate);
+            ETaskDateTextBox.setText(DueDate);
+        }
         ListTitleTextBox.setText(ListName);
         EditTaskTextBox.setText(TaskName);
-// Calander code starts.
+// Calendar code starts.
         final Calendar myCalendar = Calendar.getInstance();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
         {
@@ -70,7 +76,7 @@ public class TaskEditPage extends AppCompatActivity {
             }
         });
     }
-// Calander code ends.
+// Calendar code ends.
 
     public void UpdateTask(View view)
     {
@@ -147,7 +153,7 @@ public class TaskEditPage extends AppCompatActivity {
             Toast.makeText(TaskEditPage.this, "Reset successful.", Toast.LENGTH_SHORT).show();
         }
     }
-// Below is code to navigate to Task home page.
+// Below is code to navigate to back in application.
     public void GoBackFunction(View view)
     {
         onBackPressed();

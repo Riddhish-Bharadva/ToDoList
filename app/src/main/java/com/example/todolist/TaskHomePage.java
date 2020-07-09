@@ -191,7 +191,10 @@ public class TaskHomePage extends AppCompatActivity {
                 Holder = (TaskHomePage.TaskMyAdapter.ViewHolder) convertView.getTag();
             }
             Holder.TaskTitleTextBox.setText(mtasktitle.get(position));
+            Holder.TaskTitleTextBox.setTextColor(Color.parseColor("#000000"));
             Holder.TaskDueDateTextBox.setText("Due on : " + mtaskduedate.get(position));
+            Holder.TaskDueDateTextBox.setBackgroundColor(Color.parseColor("#f2f2f2"));
+            Holder.TaskDueDateTextBox.setTextColor(Color.parseColor("#000000"));
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             Date d = new Date();
             String Date1 = sdf.format(d.getTime());

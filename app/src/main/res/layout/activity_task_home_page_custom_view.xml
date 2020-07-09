@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -28,7 +27,6 @@
                 android:id="@+id/ListTaskTextBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:textSize="15sp"
                 android:hint="Example Task Title"
                 android:textColorHint="#000000"/>
@@ -42,7 +40,6 @@
                     android:id="@+id/TaskDueDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:textSize="14sp"
                     android:padding="5dp"
                     android:hint="Due Date"

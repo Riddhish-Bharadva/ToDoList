@@ -12,9 +12,7 @@
         <activity android:name="com.example.todolist.EditListTitle"></activity>
         <activity android:name="com.example.todolist.TaskEditPage" />
         <activity android:name="com.example.todolist.CreateNewTask" />
-        <activity android:name=".HomePageCustomView" />
         <activity android:name="com.example.todolist.TaskHomePage" />
-        <activity android:name=".HomePageListLayout" />
         <activity android:name="com.example.todolist.CreateNewToDoList" />
         <activity android:name="com.example.todolist.MainActivity">
             <intent-filter>
