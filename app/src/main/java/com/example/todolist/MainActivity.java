@@ -327,8 +327,8 @@ public class MainActivity extends AppCompatActivity
     protected void onRestart()
     {
         super.onRestart();
-        Intent PageRefresh = new Intent(this, MainActivity.class);
         this.finish();
+        Intent PageRefresh = new Intent(this, MainActivity.class);
         startActivity(PageRefresh);
     }
 }
