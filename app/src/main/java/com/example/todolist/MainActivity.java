@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -260,30 +259,24 @@ public class MainActivity extends AppCompatActivity
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             Date d = new Date();
             String Date1 = sdf.format(d.getTime());
-            Log.i("Log.i","Date1"+Date1);
             Date DateToday = null;
             try {
                 DateToday = sdf.parse(Date1);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Log.i("Log.i","DateToday"+DateToday);
             Cursor db_Connection = myDB.rawQuery("Select * From TaskTable where ListName = '" + mtitle.get(position) + "' and TaskCompleted = 0", null);
             if(db_Connection.getCount() != 0)
             {
                 if(db_Connection.moveToFirst()) {
-                    Log.i("Log.i", "Inside if Condition.");
                     do {
-                        Log.i("Log.i", "Inside do while Condition.");
                         String Date2 = db_Connection.getString(db_Connection.getColumnIndex("DueDate"));
-                        Log.i("Log.i", "DueDate from DB " + Date2);
                         Date DueDate = null;
                         try {
                             DueDate = sdf.parse(Date2);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        Log.i("Log.i", "DueDate " + DueDate);
                         if (DueDate.before(DateToday)) {
                             Holder.TaskStatusTextView.setText("There are few tasks with due date in past.");
                             Holder.TaskStatusTextView.setBackgroundColor(Color.parseColor("#800000"));

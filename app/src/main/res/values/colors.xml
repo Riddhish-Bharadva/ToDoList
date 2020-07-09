@@ -3,5 +3,6 @@
     <color name="colorPrimary">#0047ab</color>
     <color name="colorPrimaryDark">#D81B60</color>
     <color name="colorAccent">#0047ab</color>
+    <color name="ButtonColor">#0047ab</color>
+    <color name="ButtonTextColor">#ffffff</color>
 </resources>
-<!-- #008577 - Green -->

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,11 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class TaskHomePage extends AppCompatActivity {
 
@@ -187,6 +192,31 @@ public class TaskHomePage extends AppCompatActivity {
             }
             Holder.TaskTitleTextBox.setText(mtasktitle.get(position));
             Holder.TaskDueDateTextBox.setText("Due on : " + mtaskduedate.get(position));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            Date d = new Date();
+            String Date1 = sdf.format(d.getTime());
+            Date DateToday = null;
+            try {
+                DateToday = sdf.parse(Date1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date DueDate = null;
+            try {
+                DueDate = sdf.parse(mtaskduedate.get(position));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (DueDate.before(DateToday) && mtaskcompleted.get(position) == 0) // If due date is in past and if task is incomplete.
+            {
+                Holder.TaskDueDateTextBox.setBackgroundColor(Color.parseColor("#800000"));
+                Holder.TaskDueDateTextBox.setTextColor(Color.parseColor("#ffffff"));
+            }
+            else if (DueDate.compareTo(DateToday) == 0 && mtaskcompleted.get(position) == 0) // If due date is today and if task is incomplete.
+            {
+                Holder.TaskDueDateTextBox.setBackgroundColor(Color.parseColor("#FFD700"));
+                Holder.TaskDueDateTextBox.setTextColor(Color.parseColor("#000000"));
+            }
             if(mtaskcompleted.get(position) == 0)
             {
                 Holder.TaskCompletedCheckBox.setChecked(false);

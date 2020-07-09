@@ -15,9 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.todolist.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

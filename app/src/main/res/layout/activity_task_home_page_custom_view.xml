@@ -44,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="14sp"
+                    android:padding="5dp"
                     android:hint="Due Date"
                     android:textColorHint="#000000"/>
 
@@ -55,8 +56,8 @@
                     android:minHeight="10dp"
                     android:onClick="EditButton"
                     android:text="Edit"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:textColor="#ffffff" />
+                    android:backgroundTint="@color/ButtonColor"
+                    android:textColor="@color/ButtonTextColor" />
 
                 <Button
                     android:id="@+id/DeleteButton"
@@ -65,8 +66,8 @@
                     android:minWidth="10dp"
                     android:minHeight="10dp"
                     android:text="Delete"
-                    android:backgroundTint="@color/colorPrimaryDark"
-                    android:textColor="#ffffff" />
+                    android:backgroundTint="@color/ButtonColor"
+                    android:textColor="@color/ButtonTextColor" />
 
             </LinearLayout>
 
